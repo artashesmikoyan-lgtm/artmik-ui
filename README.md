@@ -41,17 +41,18 @@ IntersectionObserver, matchMedia, CSS, and React handle motion and interaction.
 
 Requirements: Node.js 20.19+ or 22.12+ and npm.
 
-Install the tagged GitHub release directly:
+Clone the tagged release, install dependencies, and build the library:
 
 ```sh
-npm install github:artashesmikoyan-lgtm/artmik-ui#v0.1.0
+git clone --branch v0.1.0 https://github.com/artashesmikoyan-lgtm/artmik-ui.git
+cd artmik-ui
+npm install
+npm run build
 ```
 
-For local development, clone the repository, then install dependencies and start
-the demo:
+Start the demo during local development:
 
 ```sh
-npm install
 npm run dev
 ```
 
