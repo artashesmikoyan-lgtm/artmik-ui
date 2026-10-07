@@ -1,0 +1,24 @@
+:root {
+  --amui-bg: #f4f1eb;
+  --amui-surface: #fffefa;
+  --amui-text: #1d1d1b;
+  --amui-text-muted: #77756f;
+  --amui-border: rgb(29 29 27 / 14%);
+  --amui-accent: #c95735;
+  --amui-radius-sm: 0.5rem;
+  --amui-radius-md: 1rem;
+  --amui-radius-lg: 1.5rem;
+  --amui-motion-fast: 160ms;
+  --amui-motion-normal: 320ms;
+  --amui-motion-slow: 600ms;
+  --amui-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --amui-content-width: 72rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --amui-motion-fast: 0ms;
+    --amui-motion-normal: 0ms;
+    --amui-motion-slow: 0ms;
+  }
+}
