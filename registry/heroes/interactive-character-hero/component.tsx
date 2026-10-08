@@ -3,7 +3,7 @@ import { CursorCharacter, type CharacterAnchor, type CursorCharacterProps } from
 
 export interface InteractiveCharacterHeroProps extends Omit<HTMLAttributes<HTMLElement>, "title"> {
   frames: readonly string[];
-  centerSrc: string;
+  centerSrc?: string;
   alt: string;
   eyebrow?: string;
   headline?: string[];
@@ -64,7 +64,7 @@ export function InteractiveCharacterHero({
           className="amui-interactive-character-hero__character"
           imageClassName="amui-interactive-character-hero__image"
           frames={frames}
-          centerSrc={centerSrc}
+          centerSrc={centerSrc ?? frames[0] ?? ""}
           alt={alt}
           faceAnchor={faceAnchor}
           deadzone={deadzone}

@@ -46,7 +46,6 @@ describe("InteractiveCharacterHero", () => {
     const { container } = render(
       <InteractiveCharacterHero
         frames={frames}
-        centerSrc="/portrait-center.svg"
         alt="Original observatory automaton"
         touchBehavior="follow"
         characterPosition={{ x: 64, y: 50 }}
@@ -60,6 +59,8 @@ describe("InteractiveCharacterHero", () => {
     expect(character.dataset.trackingFrame).toBe("2");
     expect(container.querySelector(".amui-interactive-character-hero")?.getAttribute("style"))
       .toContain("--amui-character-x: 64%");
+    expect(screen.getByRole("img", { name: "Original observatory automaton" }).getAttribute("src"))
+      .toBe(frames[2]);
     fireEvent.pointerUp(window, { pointerType: "touch" });
     expect(character.dataset.trackingFrame).toBe("center");
     expect(screen.getByRole("img", { name: "Original observatory automaton" })).toBeDefined();
