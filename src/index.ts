@@ -2,6 +2,8 @@ export { FloatingNavbar } from "./components/FloatingNavbar";
 export type { FloatingNavbarItem, FloatingNavbarProps } from "./components/FloatingNavbar";
 export { HeadTracker } from "./components/HeadTracker";
 export type { EyeAnchor, HeadTrackerProps } from "./components/HeadTracker";
+export { CursorCharacter } from "./components/CursorCharacter";
+export type { CharacterAnchor, CursorCharacterProps } from "./components/CursorCharacter";
 export { EditorialSection } from "./components/EditorialSection";
 export type { EditorialSectionProps } from "./components/EditorialSection";
 export { EditorialCard } from "./components/EditorialCard";

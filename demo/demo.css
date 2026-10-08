@@ -24,17 +24,89 @@ main {
   overflow: clip;
 }
 
-.demo-hero {
-  display: flex;
-  min-height: min(90vh, 54rem);
-  flex-direction: column;
-  justify-content: center;
-  width: min(100%, var(--amui-content-width));
-  margin-inline: auto;
-  padding: 8rem clamp(1rem, 6vw, 4rem) 5rem;
+.demo-hero-page {
+  position: relative;
+  isolation: isolate;
+  min-height: max(100svh, 34rem);
+  overflow: hidden;
+  background: #8b6347;
+  color: #fff;
 }
 
-.demo-kicker,
+.demo-hero-stage,
+.demo-hero-shade {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+}
+
+.demo-hero-stage {
+  overflow: hidden;
+}
+
+.demo-hero-character {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.demo-hero-character .amui-cursor-character__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  transform: scale(1.1) translateX(6%);
+}
+
+.demo-hero-shade {
+  background:
+    linear-gradient(90deg, rgb(31 22 17 / 54%) 0%, rgb(31 22 17 / 27%) 42%, transparent 78%),
+    linear-gradient(0deg, rgb(31 22 17 / 32%), transparent 38%);
+  pointer-events: none;
+}
+
+.demo-hero-nav {
+  color: #fff;
+}
+
+.demo-hero-nav .amui-navbar__shell {
+  border-color: rgb(255 255 255 / 24%);
+  background: rgb(42 31 24 / 33%);
+  box-shadow: 0 0.5rem 2rem rgb(0 0 0 / 10%);
+  color: #fff;
+}
+
+.demo-hero-nav .amui-navbar__link {
+  color: rgb(255 255 255 / 78%);
+}
+
+.demo-hero-nav .amui-navbar__link:hover,
+.demo-hero-nav .amui-navbar__link[aria-current="location"] {
+  background: rgb(255 255 255 / 15%);
+  color: #fff;
+}
+
+.demo-hero-nav .amui-navbar__toggle {
+  border-color: rgb(255 255 255 / 35%);
+  color: #fff;
+}
+
+.demo-nav-mark {
+  color: rgb(255 255 255 / 60%);
+  font-weight: 400;
+}
+
+.demo-hero-intro {
+  position: absolute;
+  z-index: 1;
+  bottom: clamp(5rem, 12vh, 8rem);
+  left: clamp(1.25rem, 8vw, 7rem);
+  width: min(47rem, calc(100% - 2.5rem));
+  animation: demo-hero-enter 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.demo-hero-eyebrow,
 .demo-active {
   color: var(--amui-text-muted);
   font-family: "Consolas", "Courier New", monospace;
@@ -43,46 +115,135 @@ main {
   text-transform: uppercase;
 }
 
-.demo-hero h1 {
-  margin: 1rem 0;
-  font-size: clamp(3rem, 9vw, 7rem);
-  font-weight: 500;
-  letter-spacing: -0.07em;
-  line-height: 0.93;
+.demo-hero-eyebrow {
+  margin: 0 0 1rem;
+  color: rgb(255 255 255 / 78%);
 }
 
-.demo-hero > p:not(.demo-kicker):not(.demo-active) {
-  max-width: 34rem;
-  color: var(--amui-text-muted);
-  font-size: clamp(1rem, 2vw, 1.25rem);
+.demo-hero-intro h1 {
+  margin: 0;
+  font-size: clamp(3.75rem, 9.4vw, 8rem);
+  font-weight: 450;
+  letter-spacing: -0.07em;
+  line-height: 0.88;
+}
+
+.demo-hero-copy {
+  max-width: 28rem;
+  margin: 1.5rem 0 0;
+  color: rgb(255 255 255 / 86%);
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
   line-height: 1.6;
 }
 
-.demo-active {
-  margin-top: 2rem;
-  letter-spacing: 0;
-  text-transform: none;
+.demo-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
 }
 
-.demo-active strong {
-  color: var(--amui-text);
+.demo-hero-button {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  padding: 0.65rem 1.15rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background-color var(--amui-motion-fast),
+    color var(--amui-motion-fast),
+    transform var(--amui-motion-fast);
+}
+
+.demo-hero-button:hover {
+  transform: translateY(-2px);
+}
+
+.demo-hero-button:focus-visible {
+  outline-offset: 4px;
+}
+
+.demo-hero-button:focus-visible {
+  outline: 2px solid #fff;
+}
+
+.demo-hero-button--light {
+  background: #fff;
+  color: #211b17;
+}
+
+.demo-hero-button--light:hover {
+  background: #f0e8de;
+}
+
+.demo-hero-button--glass {
+  border-color: rgb(255 255 255 / 48%);
+  background: rgb(255 255 255 / 10%);
+  color: #fff;
+  backdrop-filter: blur(12px);
+}
+
+.demo-hero-button--glass:hover {
+  background: rgb(255 255 255 / 20%);
+}
+
+.demo-hero-hint {
+  position: absolute;
+  right: clamp(1.25rem, 5vw, 4rem);
+  bottom: 2.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin: 0;
+  color: rgb(255 255 255 / 82%);
+  font-family: "Consolas", "Courier New", monospace;
+  font-size: 0.72rem;
+}
+
+.demo-hero-hint__dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: #eab580;
+  box-shadow: 0 0 0 0.25rem rgb(234 181 128 / 20%);
 }
 
 .demo-nav-action {
   display: inline-flex;
   min-height: 2.25rem;
   align-items: center;
+  gap: 0.4rem;
   padding-inline: 0.8rem;
   border-radius: 999px;
-  background: var(--amui-text);
-  color: var(--amui-surface);
+  background: #fff;
+  color: #211b17;
   font-size: 0.875rem;
   text-decoration: none;
 }
 
 .demo-nav-action:focus-visible {
-  outline: 2px solid var(--amui-accent);
+  outline: 2px solid #fff;
   outline-offset: 3px;
+}
+
+.demo-principles-status {
+  align-self: center;
+}
+
+.demo-principles-status .demo-active {
+  margin-top: 1rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.demo-active strong {
+  color: var(--amui-text);
 }
 
 .demo-two-column,
@@ -97,18 +258,6 @@ main {
   max-width: 38rem;
   font-size: clamp(1.15rem, 2.5vw, 1.8rem);
   line-height: 1.55;
-}
-
-.demo-avatar {
-  width: min(100%, 22rem);
-  justify-self: end;
-  aspect-ratio: 4 / 5;
-  background: #ddd7ce;
-}
-
-.demo-avatar .amui-head-tracker__image {
-  height: 100%;
-  object-fit: cover;
 }
 
 .demo-card-grid {
@@ -154,20 +303,67 @@ main {
   text-align: center;
 }
 
+@keyframes demo-hero-enter {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 42rem) {
+  .demo-hero-intro {
+    bottom: 6.5rem;
+    left: 1.25rem;
+    width: calc(100% - 2.5rem);
+  }
+
+  .demo-hero-intro h1 {
+    font-size: clamp(3rem, 12vw, 3.5rem);
+  }
+
+  .demo-hero-copy {
+    max-width: 20rem;
+    margin-top: 0.8rem;
+  }
+
+  .demo-hero-actions {
+    gap: 0.55rem;
+    margin-top: 1rem;
+  }
+
+  .demo-hero-button {
+    min-height: 2.75rem;
+    padding-inline: 0.9rem;
+    font-size: 0.82rem;
+  }
+
+  .demo-hero-hint {
+    right: 1.25rem;
+    bottom: 1.5rem;
+    font-size: 0.66rem;
+  }
+
   .demo-two-column,
   .demo-motion-grid,
   .demo-card-grid {
     grid-template-columns: 1fr;
-  }
-
-  .demo-avatar {
-    justify-self: start;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .demo-hero-intro {
+    animation: none;
+  }
+
+  .demo-hero-button {
+    transition: none;
   }
 }

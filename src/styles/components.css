@@ -223,6 +223,19 @@
   transition: transform var(--amui-motion-fast) var(--amui-ease-out);
 }
 
+.amui-cursor-character {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+.amui-cursor-character__image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .amui-reveal,
 .amui-stagger__item > * {
   transition:
@@ -253,7 +266,8 @@
 }
 
 .amui-navbar[data-reduced-motion="true"] *,
-.amui-head-tracker[data-reduced-motion="true"] * {
+.amui-head-tracker[data-reduced-motion="true"] *,
+.amui-cursor-character[data-reduced-motion="true"] * {
   transition-duration: 0.01ms !important;
   transition-delay: 0ms !important;
   animation-duration: 0.01ms !important;
@@ -296,6 +310,7 @@
 @media (prefers-reduced-motion: reduce) {
   .amui-navbar *,
   .amui-head-tracker *,
+  .amui-cursor-character *,
   .amui-reveal,
   .amui-stagger__item > * {
     scroll-behavior: auto !important;

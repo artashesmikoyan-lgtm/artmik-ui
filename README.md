@@ -23,6 +23,7 @@ IntersectionObserver, matchMedia, CSS, and React handle motion and interaction.
 | --- | --- |
 | `FloatingNavbar` | Floating, scroll-collapsing navigation with a responsive menu |
 | `HeadTracker` | Pointer-responsive image with optional configurable gaze markers |
+| `CursorCharacter` | Character that turns through supplied directional frames to follow the pointer |
 | `EditorialSection` | Section structure with optional index, eyebrow, and title |
 | `EditorialCard` | Monochrome editorial article/card surface |
 | `Reveal` | Lightweight, once-on-view entrance reveal |
@@ -87,6 +88,7 @@ import {
   EditorialCard,
   EditorialSection,
   FloatingNavbar,
+  CursorCharacter,
   HeadTracker,
   Reveal,
   StaggerReveal,
@@ -98,6 +100,17 @@ const navigation = [
   { href: "#work", label: "Work" },
   { href: "#about", label: "About" },
 ];
+
+const directionalFrames = [
+  "/images/character-right.webp",
+  "/images/character-down-right.webp",
+  "/images/character-down.webp",
+  "/images/character-down-left.webp",
+  "/images/character-left.webp",
+  "/images/character-up-left.webp",
+  "/images/character-up.webp",
+  "/images/character-up-right.webp",
+] as const;
 
 function Page() {
   const reducedMotion = useReducedMotion();
@@ -115,6 +128,11 @@ function Page() {
       <Reveal>
         <HeadTracker src="/images/example.webp" alt="An abstract illustrated face" eyeTracking />
       </Reveal>
+      <CursorCharacter
+        frames={directionalFrames}
+        centerSrc="/images/character-center.webp"
+        alt="Illustrated character looking toward the pointer"
+      />
       <p>{reducedMotion ? "Reduced motion is on." : "Motion is available."}</p>
     </>
   );
@@ -138,6 +156,14 @@ image's own `alt` text meaningful; gaze markers are decorative and hidden from
 assistive technology. A reduced-motion system preference always disables
 tracking; the `reducedMotion` prop can additionally force it off. An action slot
 can be passed to `FloatingNavbar` with its `action` prop.
+
+`CursorCharacter` accepts a clockwise-ordered `frames` array (starting with the
+character facing right), a `centerSrc`, and meaningful `alt` text. Frames should
+be evenly spaced across a full turn and share the same dimensions; `faceAnchor`
+sets the gaze point as image percentages and `deadzone` sets the center-look
+radius in pixels. `touchBehavior="follow"` enables touch tracking; by default
+touch input is ignored. The system reduced-motion preference, or
+`reducedMotion`, keeps the character on its center frame.
 
 `Reveal` and `StaggerReveal` take `delay`/`step`, `duration`, `distance`,
 `threshold`, and `once` props. Stagger items are wrapped in non-visual

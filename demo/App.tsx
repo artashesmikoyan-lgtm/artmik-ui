@@ -2,12 +2,31 @@ import {
   EditorialCard,
   EditorialSection,
   FloatingNavbar,
-  HeadTracker,
+  CursorCharacter,
   Reveal,
   StaggerReveal,
   useReducedMotion,
   useScrollSpy,
 } from "../src";
+
+const characterFrames = [
+  new URL("./assets/cursor-character/frame_00.webp", import.meta.url).href,
+  new URL("./assets/cursor-character/frame_04.webp", import.meta.url).href,
+  new URL("./assets/cursor-character/frame_08.webp", import.meta.url).href,
+  new URL("./assets/cursor-character/frame_12.webp", import.meta.url).href,
+  new URL("./assets/cursor-character/frame_16.webp", import.meta.url).href,
+  new URL("./assets/cursor-character/frame_20.webp", import.meta.url).href,
+  new URL("./assets/cursor-character/frame_24.webp", import.meta.url).href,
+  new URL("./assets/cursor-character/frame_28.webp", import.meta.url).href,
+  new URL("./assets/cursor-character/frame_32.webp", import.meta.url).href,
+  new URL("./assets/cursor-character/frame_36.webp", import.meta.url).href,
+  new URL("./assets/cursor-character/frame_40.webp", import.meta.url).href,
+  new URL("./assets/cursor-character/frame_44.webp", import.meta.url).href,
+  new URL("./assets/cursor-character/frame_48.webp", import.meta.url).href,
+  new URL("./assets/cursor-character/frame_52.webp", import.meta.url).href,
+  new URL("./assets/cursor-character/frame_56.webp", import.meta.url).href,
+  new URL("./assets/cursor-character/frame_60.webp", import.meta.url).href,
+] as const;
 
 const sections = [
   { href: "#principles", label: "Principles" },
@@ -26,19 +45,45 @@ export function App() {
   return (
     <>
       <FloatingNavbar
-        brand={<span>AM / UI</span>}
+        className="demo-hero-nav"
+        brand={<span>ARTMIK <span className="demo-nav-mark">/ UI</span></span>}
         items={sections}
-        action={<a className="demo-nav-action" href="#components">Explore</a>}
+        action={<a className="demo-nav-action" href="#components">Explore <span aria-hidden="true">↗</span></a>}
         ariaLabel="Demo sections"
         collapseAfter={48}
       />
       <main>
-        <section className="demo-hero">
-          <p className="demo-kicker">Small pieces, considered motion</p>
-          <h1>Editorial building blocks<br />for the open web.</h1>
-          <p>Independent components that bring clarity, rhythm, and a little movement to interfaces.</p>
-          <ActiveSectionStatus />
-          <p className="demo-active">Motion preference: <strong>{reducedMotion ? "Reduced" : "Full"}</strong></p>
+        <section className="demo-hero-page" aria-labelledby="demo-hero-title">
+          <div className="demo-hero-stage">
+            <CursorCharacter
+              className="demo-hero-character"
+              frames={characterFrames}
+              centerSrc={new URL("./assets/cursor-character/center.webp", import.meta.url).href}
+              alt="A hooded cat looking toward the pointer"
+              faceAnchor={{ x: 56, y: 42 }}
+              deadzone={42}
+            />
+          </div>
+          <div className="demo-hero-shade" aria-hidden="true" />
+          <div className="demo-hero-intro">
+            <p className="demo-hero-eyebrow">A characterful UI library</p>
+            <h1 id="demo-hero-title">A little more<br />character.</h1>
+            <p className="demo-hero-copy">
+              Thoughtful building blocks for interfaces that feel a little more human.
+            </p>
+            <div className="demo-hero-actions">
+              <a className="demo-hero-button demo-hero-button--light" href="#components">
+                Explore components <span aria-hidden="true">↗</span>
+              </a>
+              <a className="demo-hero-button demo-hero-button--glass" href="#principles">
+                Our approach
+              </a>
+            </div>
+          </div>
+          <p className="demo-hero-hint">
+            <span className="demo-hero-hint__dot" aria-hidden="true" />
+            Move your cursor; watch the character follow
+          </p>
         </section>
 
         <EditorialSection id="principles" index="01" eyebrow="Foundation" title="A quiet foundation.">
@@ -49,15 +94,12 @@ export function App() {
                 then add only the motion and detail your content needs.
               </p>
             </Reveal>
-            <HeadTracker
-              className="demo-avatar"
-              src={new URL("./avatar.svg", import.meta.url).href}
-              alt="Illustrated abstract face"
-              scale={1.08}
-              trackingStrength={0.8}
-              eyeTracking
-              eyeAnchors={[{ x: 43, y: 40 }, { x: 59, y: 40 }]}
-            />
+            <div className="demo-principles-status">
+              <ActiveSectionStatus />
+              <p className="demo-active">
+                Motion preference: <strong>{reducedMotion ? "Reduced" : "Full"}</strong>
+              </p>
+            </div>
           </div>
         </EditorialSection>
 
