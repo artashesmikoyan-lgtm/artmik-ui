@@ -12,16 +12,8 @@
       "dependencies": ["react"],
       "registryDependencies": [],
       "files": [
-        {
-          "path": "registry/sections/editorial-card/component.tsx",
-          "type": "registry:component",
-          "target": "editorial-card.tsx"
-        },
-        {
-          "path": "registry/sections/editorial-card/styles.css",
-          "type": "registry:style",
-          "target": "editorial-card.css"
-        }
+        { "path": "registry/sections/editorial-card/component.tsx", "type": "registry:component", "target": "editorial-card.tsx" },
+        { "path": "registry/sections/editorial-card/styles.css", "type": "registry:style", "target": "editorial-card.css" }
       ],
       "meta": {
         "id": "editorial-card",
@@ -31,6 +23,95 @@
         "assets": [],
         "installation": "Copy editorial-card.tsx into your component directory, import editorial-card.css once, and ensure React 18 or 19 is installed.",
         "reducedMotion": "No animation is used; the component remains static for all motion preferences.",
+        "license": "MIT",
+        "provenance": "ORIGINAL"
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "cinematic-hero",
+      "type": "registry:ui",
+      "title": "Cinematic Hero",
+      "description": "A sculptural editorial hero with sequenced type, pointer-responsive depth, and a warm celestial composition.",
+      "dependencies": ["react"],
+      "registryDependencies": [],
+      "files": [
+        { "path": "registry/heroes/cinematic-hero/component.tsx", "type": "registry:component" },
+        { "path": "src/components/CinematicHero.css", "type": "registry:style", "target": "styles.css" },
+        { "path": "registry/heroes/cinematic-hero/demo.tsx", "type": "registry:file", "target": "demo.tsx" },
+        { "path": "src/hooks/useReducedMotion.ts", "type": "registry:hook", "target": "useReducedMotion.ts" }
+      ],
+      "meta": {
+        "id": "cinematic-hero",
+        "category": "heroes",
+        "tags": ["cinematic", "editorial", "parallax", "hero", "reduced-motion"],
+        "frameworks": ["react"],
+        "assets": [],
+        "installation": "Copy component.tsx and useReducedMotion.ts into your project, then import styles.css once. React 18 or 19 is required.",
+        "reducedMotion": "The pointer response is disabled and entrance transitions are reduced to an effectively static state when prefers-reduced-motion is enabled.",
+        "license": "MIT",
+        "provenance": "ORIGINAL"
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "interactive-character-hero",
+      "type": "registry:ui",
+      "title": "Interactive Character Hero",
+      "description": "An original illustrated observatory automaton turns toward the pointer through eight art-directed frames.",
+      "dependencies": ["react"],
+      "registryDependencies": [],
+      "files": [
+        { "path": "registry/heroes/interactive-character-hero/component.tsx", "type": "registry:component" },
+        { "path": "src/components/InteractiveCharacterHero.css", "type": "registry:style", "target": "styles.css" },
+        { "path": "registry/heroes/interactive-character-hero/demo.tsx", "type": "registry:file", "target": "demo.tsx" },
+        { "path": "src/components/CursorCharacter.tsx", "type": "registry:lib", "target": "CursorCharacter.tsx" },
+        { "path": "src/hooks/useReducedMotion.ts", "type": "registry:hook", "target": "useReducedMotion.ts" }
+      ],
+      "meta": {
+        "id": "interactive-character-hero",
+        "category": "heroes",
+        "tags": ["character", "cursor", "illustration", "interactive", "hero"],
+        "frameworks": ["react"],
+        "assets": [
+          "registry/heroes/interactive-character-hero/assets/portrait-center.svg",
+          "registry/heroes/interactive-character-hero/assets/portrait-00.svg",
+          "registry/heroes/interactive-character-hero/assets/portrait-01.svg",
+          "registry/heroes/interactive-character-hero/assets/portrait-02.svg",
+          "registry/heroes/interactive-character-hero/assets/portrait-03.svg",
+          "registry/heroes/interactive-character-hero/assets/portrait-04.svg",
+          "registry/heroes/interactive-character-hero/assets/portrait-05.svg",
+          "registry/heroes/interactive-character-hero/assets/portrait-06.svg",
+          "registry/heroes/interactive-character-hero/assets/portrait-07.svg"
+        ],
+        "installation": "Copy component.tsx, CursorCharacter.tsx, and useReducedMotion.ts into your component directory, copy the portrait assets to assets/, and import styles.css once. React 18 or 19 is required.",
+        "reducedMotion": "CursorCharacter holds the center image and disables directional frame tracking when reduced motion is preferred. Hero entrance effects are reduced by CSS.",
+        "license": "MIT",
+        "provenance": "ORIGINAL"
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "kinetic-typography-hero",
+      "type": "registry:ui",
+      "title": "Kinetic Typography Hero",
+      "description": "A monumental typographic composition with word-by-word entrance timing, sharp print contrast, and optional scroll registration.",
+      "dependencies": ["react"],
+      "registryDependencies": [],
+      "files": [
+        { "path": "registry/heroes/kinetic-typography-hero/component.tsx", "type": "registry:component" },
+        { "path": "src/components/KineticTypographyHero.css", "type": "registry:style", "target": "styles.css" },
+        { "path": "registry/heroes/kinetic-typography-hero/demo.tsx", "type": "registry:file", "target": "demo.tsx" },
+        { "path": "src/hooks/useReducedMotion.ts", "type": "registry:hook", "target": "useReducedMotion.ts" }
+      ],
+      "meta": {
+        "id": "kinetic-typography-hero",
+        "category": "heroes",
+        "tags": ["typography", "kinetic", "editorial", "scroll", "hero"],
+        "frameworks": ["react"],
+        "assets": [],
+        "installation": "Copy component.tsx and useReducedMotion.ts into your project, then import styles.css once. React 18 or 19 is required.",
+        "reducedMotion": "Word entrance animations are effectively immediate, scroll listeners and scroll-derived transforms are disabled, and the text layout remains unchanged.",
         "license": "MIT",
         "provenance": "ORIGINAL"
       }

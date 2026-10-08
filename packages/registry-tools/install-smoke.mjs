@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { access, cp, mkdir, mkdtemp, readFile, readdir, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { dirname, join, relative, resolve, sep } from "node:path";
+import { build } from "esbuild";
 import {
   isSafeRelativePath,
   readRegistry,
@@ -64,6 +65,23 @@ try {
     const componentSource = await readFile(componentPath, "utf8");
     assert.match(componentSource, /from\s+["']react["']/);
     assert.doesNotMatch(componentSource, /from\s+["'][^"']*(?:demo|gallery|src\/)[^"']*["']/);
+
+    const demoFile = files.find(({ target }) => target === "demo.tsx");
+    if (demoFile) {
+      const demoPath = resolve(itemDestination, demoFile.target);
+      const bundled = await build({
+        entryPoints: [demoPath],
+        bundle: true,
+        format: "esm",
+        platform: "browser",
+        external: ["react", "react-dom"],
+        loader: { ".svg": "dataurl" },
+        outdir: resolve(destination, "build", item.name),
+        write: false,
+      });
+      assert.ok(bundled.outputFiles.some((output) => output.path.endsWith(".js")), `${item.name} demo bundles in isolation`);
+      assert.ok(bundled.outputFiles.some((output) => output.path.endsWith(".css")), `${item.name} demo stylesheet bundles in isolation`);
+    }
 
     const installedNames = (await listFiles(itemDestination)).sort();
     assert.deepEqual(installedNames, files.map(({ target }) => target).sort());

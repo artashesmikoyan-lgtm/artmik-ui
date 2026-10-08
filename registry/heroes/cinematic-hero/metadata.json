@@ -1,0 +1,15 @@
+{
+  "id": "cinematic-hero",
+  "title": "Cinematic Hero",
+  "description": "A sculptural editorial hero with sequenced type, pointer-responsive depth, and a warm celestial composition.",
+  "category": "heroes",
+  "tags": ["cinematic", "editorial", "parallax", "hero", "reduced-motion"],
+  "frameworks": ["react"],
+  "dependencies": ["react"],
+  "files": ["component.tsx", "CinematicHero.css", "demo.tsx", "useReducedMotion.ts"],
+  "assets": [],
+  "installation": "Copy component.tsx and useReducedMotion.ts into your project, then import styles.css once. React 18 or 19 is required.",
+  "reducedMotion": "The pointer response is disabled and entrance transitions are reduced to an effectively static state when prefers-reduced-motion is enabled.",
+  "license": "MIT",
+  "provenance": "ORIGINAL"
+}

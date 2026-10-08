@@ -165,6 +165,11 @@ try {
     index.items.map(({ name }) => name),
     "catalog and registry have matching item identities",
   );
+  assert.deepEqual(
+    catalog.components.filter(({ preview }) => preview).map(({ name }) => name),
+    ["cinematic-hero", "interactive-character-hero", "kinetic-typography-hero"],
+    "catalog identifies every registered interactive hero demo",
+  );
 
   for (const registeredItem of sourceRegistry.items) {
     const item = index.items.find(({ name }) => name === registeredItem.name);

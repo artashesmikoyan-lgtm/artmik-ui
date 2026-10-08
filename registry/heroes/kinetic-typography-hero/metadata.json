@@ -1,0 +1,15 @@
+{
+  "id": "kinetic-typography-hero",
+  "title": "Kinetic Typography Hero",
+  "description": "A monumental typographic composition with word-by-word entrance timing, sharp print contrast, and optional scroll registration.",
+  "category": "heroes",
+  "tags": ["typography", "kinetic", "editorial", "scroll", "hero"],
+  "frameworks": ["react"],
+  "dependencies": ["react"],
+  "files": ["component.tsx", "KineticTypographyHero.css", "demo.tsx", "useReducedMotion.ts"],
+  "assets": [],
+  "installation": "Copy component.tsx and useReducedMotion.ts into your project, then import styles.css once. React 18 or 19 is required.",
+  "reducedMotion": "Word entrance animations are effectively immediate, scroll listeners and scroll-derived transforms are disabled, and the text layout remains unchanged.",
+  "license": "MIT",
+  "provenance": "ORIGINAL"
+}

@@ -1,0 +1,257 @@
+.amui-interactive-character-hero {
+  position: relative;
+  min-height: min(800px, 100svh);
+  overflow: hidden;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  background: #e8e3d8;
+  color: #24201e;
+  font-family: system-ui, sans-serif;
+}
+
+.amui-interactive-character-hero *,
+.amui-interactive-character-hero *::before,
+.amui-interactive-character-hero *::after {
+  box-sizing: border-box;
+}
+
+.amui-interactive-character-hero__frame {
+  position: relative;
+  grid-column: 2;
+  grid-row: 1;
+  height: min(700px, 88svh);
+  margin: 5% 7% 5% 0;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 51% 43%, rgba(207, 154, 89, .26), transparent 49%),
+    #292426;
+}
+
+.amui-interactive-character-hero__frame::before,
+.amui-interactive-character-hero__frame::after {
+  position: absolute;
+  z-index: 1;
+  inset: 7%;
+  content: "";
+  border: 1px solid rgba(232, 227, 216, .22);
+  pointer-events: none;
+}
+
+.amui-interactive-character-hero__frame::after {
+  inset: 50% 7% auto;
+  border-width: 1px 0 0;
+}
+
+.amui-interactive-character-hero__character {
+  position: absolute;
+  z-index: 0;
+  top: var(--amui-character-y, 54%);
+  left: var(--amui-character-x, 68%);
+  width: min(72%, 450px);
+  transform: translate(-50%, -50%);
+}
+
+.amui-interactive-character-hero__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 28px 24px rgba(0, 0, 0, .28));
+}
+
+.amui-interactive-character-hero__register,
+.amui-interactive-character-hero__annotation,
+.amui-interactive-character-hero__edge-label {
+  position: absolute;
+  z-index: 2;
+  color: rgba(232, 227, 216, .65);
+  font: 9px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace;
+  letter-spacing: .12em;
+}
+
+.amui-interactive-character-hero__register {
+  top: 22px;
+  right: 23px;
+  left: 23px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.amui-interactive-character-hero__register i {
+  width: 42px;
+  height: 1px;
+  background: #cf9a59;
+}
+
+.amui-interactive-character-hero__annotation {
+  right: 7%;
+  bottom: 9%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 9px;
+  font-size: 7px;
+}
+
+.amui-interactive-character-hero__annotation i {
+  width: clamp(22px, 5vw, 66px);
+  height: 1px;
+  background: #cf9a59;
+}
+
+.amui-interactive-character-hero__copy {
+  position: relative;
+  z-index: 2;
+  grid-column: 1;
+  grid-row: 1;
+  width: min(520px, 100%);
+  margin: 0 0 0 max(7%, calc((100vw - 1280px) / 2));
+  padding: 36px 0 36px 28px;
+}
+
+.amui-interactive-character-hero__eyebrow {
+  margin: 0 0 25px;
+  color: #97633b;
+  font: 650 10px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace;
+  letter-spacing: .17em;
+  animation: amui-character-copy-in .7s .08s both;
+}
+
+.amui-interactive-character-hero__headline {
+  margin: 0;
+  font: 750 clamp(60px, 9vw, 124px)/.8 "Arial Narrow", "Helvetica Neue", sans-serif;
+  letter-spacing: -.09em;
+}
+
+.amui-interactive-character-hero__headline span {
+  display: block;
+  animation: amui-character-copy-in .85s calc(.2s + var(--amui-character-line, 0) * .13s) both;
+}
+
+.amui-interactive-character-hero__headline span:nth-child(2) {
+  padding-left: clamp(16px, 4vw, 54px);
+  color: #9f6a42;
+}
+
+.amui-interactive-character-hero__description {
+  max-width: 320px;
+  margin: 26px 0 21px;
+  color: rgba(36, 32, 30, .68);
+  font-size: 13px;
+  line-height: 1.75;
+  animation: amui-character-copy-in .7s .53s both;
+}
+
+.amui-interactive-character-hero__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  color: #24201e;
+  font-size: 11px;
+  font-weight: 650;
+  text-decoration: none;
+  animation: amui-character-copy-in .7s .64s both;
+}
+
+.amui-interactive-character-hero__cta-mark {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(36, 32, 30, .38);
+  border-radius: 50%;
+  font-size: 16px;
+  transition: color .2s ease, background-color .2s ease, transform .2s ease;
+}
+
+.amui-interactive-character-hero__cta:hover .amui-interactive-character-hero__cta-mark {
+  transform: rotate(45deg);
+  background: #24201e;
+  color: #e8e3d8;
+}
+
+.amui-interactive-character-hero__cta:focus-visible {
+  outline: 2px solid #97633b;
+  outline-offset: 6px;
+}
+
+.amui-interactive-character-hero__hint {
+  margin: 40px 0 0;
+  color: rgba(36, 32, 30, .4);
+  font: 8px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace;
+  letter-spacing: .11em;
+}
+
+.amui-interactive-character-hero__edge-label {
+  right: 8px;
+  bottom: 50%;
+  color: rgba(36, 32, 30, .48);
+  writing-mode: vertical-rl;
+  transform: translateY(50%);
+}
+
+@keyframes amui-character-copy-in {
+  from { opacity: 0; transform: translateY(13px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 740px) {
+  .amui-interactive-character-hero {
+    min-height: 900px;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+    align-items: end;
+  }
+
+  .amui-interactive-character-hero__frame {
+    grid-column: 1;
+    grid-row: 1;
+    width: calc(100% - 36px);
+    height: min(64svh, 590px);
+    min-height: 400px;
+    margin: 74px 18px 0;
+  }
+
+  .amui-interactive-character-hero__character {
+    top: 56%;
+    left: 58%;
+    width: min(70%, 340px);
+  }
+
+  .amui-interactive-character-hero__copy {
+    grid-column: 1;
+    grid-row: 2;
+    width: 100%;
+    margin: 0;
+    padding: 35px 26px 86px;
+  }
+
+  .amui-interactive-character-hero__headline {
+    font-size: clamp(58px, 15vw, 100px);
+  }
+
+  .amui-interactive-character-hero__hint {
+    margin-top: 23px;
+  }
+
+  .amui-interactive-character-hero__edge-label {
+    right: 7px;
+    top: 38px;
+    bottom: auto;
+    writing-mode: horizontal-tb;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .amui-interactive-character-hero *,
+  .amui-interactive-character-hero *::before,
+  .amui-interactive-character-hero *::after {
+    animation-duration: .01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}

@@ -273,6 +273,7 @@ export async function buildRegistryArtifacts({
       reducedMotion: metadata.reducedMotion,
       license: metadata.license,
       provenance: metadata.provenance,
+      preview: files.some(({ target }) => target === "demo.tsx"),
     });
   }
 

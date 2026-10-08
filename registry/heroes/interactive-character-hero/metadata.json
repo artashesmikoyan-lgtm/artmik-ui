@@ -1,0 +1,31 @@
+{
+  "id": "interactive-character-hero",
+  "title": "Interactive Character Hero",
+  "description": "An original illustrated observatory automaton turns toward the pointer through eight art-directed frames.",
+  "category": "heroes",
+  "tags": ["character", "cursor", "illustration", "interactive", "hero"],
+  "frameworks": ["react"],
+  "dependencies": ["react"],
+  "files": [
+    "component.tsx",
+    "InteractiveCharacterHero.css",
+    "demo.tsx",
+    "CursorCharacter.tsx",
+    "useReducedMotion.ts"
+  ],
+  "assets": [
+    "registry/heroes/interactive-character-hero/assets/portrait-center.svg",
+    "registry/heroes/interactive-character-hero/assets/portrait-00.svg",
+    "registry/heroes/interactive-character-hero/assets/portrait-01.svg",
+    "registry/heroes/interactive-character-hero/assets/portrait-02.svg",
+    "registry/heroes/interactive-character-hero/assets/portrait-03.svg",
+    "registry/heroes/interactive-character-hero/assets/portrait-04.svg",
+    "registry/heroes/interactive-character-hero/assets/portrait-05.svg",
+    "registry/heroes/interactive-character-hero/assets/portrait-06.svg",
+    "registry/heroes/interactive-character-hero/assets/portrait-07.svg"
+  ],
+  "installation": "Copy component.tsx, CursorCharacter.tsx, and useReducedMotion.ts into your component directory, copy the portrait assets to assets/, and import styles.css once. React 18 or 19 is required.",
+  "reducedMotion": "CursorCharacter holds the center image and disables directional frame tracking when reduced motion is preferred. Hero entrance effects are reduced by CSS.",
+  "license": "MIT",
+  "provenance": "ORIGINAL"
+}
