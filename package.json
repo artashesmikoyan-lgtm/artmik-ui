@@ -24,10 +24,12 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build && tsc -p tsconfig.build.json",
+    "build": "vite build && tsc -p tsconfig.build.json && node packages/registry-tools/build-registry.mjs",
     "build:demo": "vite build --config vite.demo.config.ts",
+    "build:registry": "node packages/registry-tools/build-registry.mjs",
     "validate:registry": "node packages/registry-tools/validate-registry.mjs",
     "test:registry-install": "node packages/registry-tools/install-smoke.mjs",
+    "test:registry-artifacts": "node packages/registry-tools/artifact-smoke.mjs",
     "test:package-consumer": "node ./scripts/package-consumer-smoke.mjs",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",

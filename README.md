@@ -69,6 +69,7 @@ npm run build
 npm run build:demo
 npm run validate:registry
 npm run test:registry-install
+npm run test:registry-artifacts
 npm run test:package-consumer
 ```
 
@@ -98,10 +99,61 @@ demo and metadata. It depends only on React and uses no gallery-private
 imports or external assets. Registry entries include category, tags, framework,
 dependency, installation, reduced-motion, and license metadata.
 
-Run `npm run validate:registry` to check catalog entries and required files, and
-`npm run test:registry-install` to stage and verify the files an installer
-would receive. Registry files are currently consumed from the local checkout;
-a hosted registry endpoint is intentionally outside this phase.
+Run `npm run validate:registry` to check catalog entries and required files.
+`npm run build` generates the versioned distribution bundle in
+`dist/registry-artifacts/`:
+
+```text
+registry-artifacts/
+├── catalog.json
+├── registry.json
+├── r/
+│   └── <component>.json
+├── components/
+│   └── <component>/
+│       ├── INSTALL.md
+│       └── <declared install files and assets>
+└── downloads/
+    └── <component>.zip
+```
+
+The shadcn-compatible `registry.json` points at the independently served
+component files. Each `r/<component>.json` contains that component's source
+inline as UTF-8 text, while binary assets remain byte-exact in the component
+bundle and ZIP. `catalog.json` provides searchable category, tag, framework,
+description, dependency, installation, license, and motion metadata. ZIP
+archives contain only the declared component files and assets plus a generated
+`INSTALL.md`; demos and gallery code are not included. Output ordering,
+JSON formatting, ZIP timestamps, and ZIP contents are deterministic. Paths
+are checked against traversal, absolute paths, and symlinks escaping the
+repository.
+
+To consume these artifacts from another React/Vite application, build or
+download the artifacts from a pinned Artmik UI version, then copy
+`dist/registry-artifacts/` to that application's static public directory (or
+publish the same files through its chosen static host). No deployment domain is
+assumed. The portfolio can fetch `catalog.json` for its listing, load
+`r/<component>.json` for source previews or shadcn installation, and link to
+`downloads/<component>.zip`. For direct shadcn CLI installs, serve
+`registry.json` and the referenced `components/` files from the same static
+base URL, then add an individual component JSON endpoint:
+
+```sh
+npx shadcn@latest add <registry-base-url>/r/editorial-card.json
+```
+
+The root `registry.json` is available for shadcn registry discovery and its
+component file paths resolve relative to that same static base URL.
+For components with binary assets, use the component bundle or ZIP to obtain
+those assets; binary bytes are not converted to text in the JSON endpoint.
+
+The destination application should install the dependencies declared in the
+catalog (React is an existing peer dependency for this component); registry
+source files do not import from the Artmik UI package or demo. Run
+`npm run test:registry-install` to verify declared file staging, and
+`npm run test:registry-artifacts` to verify artifact integrity, deterministic
+generation, and ZIP extraction/completeness. Registry generation does not
+change the library's package exports.
 
 ## Usage
 

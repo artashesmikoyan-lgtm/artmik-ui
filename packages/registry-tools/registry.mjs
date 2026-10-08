@@ -1,8 +1,42 @@
-import { access, readFile } from "node:fs/promises";
+import { readFile, realpath, stat } from "node:fs/promises";
 import { dirname, isAbsolute, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 export const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
+
+export function isSafeRelativePath(path) {
+  return typeof path === "string"
+    && path.length > 0
+    && !path.includes("\\")
+    && !path.includes("\0")
+    && !isAbsolute(path)
+    && !/^[a-zA-Z]:/.test(path)
+    && path.split("/").every((segment) => segment !== "" && segment !== "." && segment !== "..");
+}
+
+export async function resolveRegistryFile(root, path) {
+  if (!isSafeRelativePath(path)) {
+    throw new Error(`Unsafe registry path: ${String(path)}.`);
+  }
+
+  const rootPath = await realpath(root);
+  const sourcePath = resolve(rootPath, path);
+  const fromRoot = relative(rootPath, sourcePath);
+  if (fromRoot === ".." || fromRoot.startsWith(`..${sep}`) || isAbsolute(fromRoot)) {
+    throw new Error(`Registry path escapes the repository: ${path}.`);
+  }
+
+  const realSourcePath = await realpath(sourcePath);
+  const fromRealRoot = relative(rootPath, realSourcePath);
+  if (fromRealRoot === ".." || fromRealRoot.startsWith(`..${sep}`) || isAbsolute(fromRealRoot)) {
+    throw new Error(`Registry path resolves outside the repository: ${path}.`);
+  }
+  if (!(await stat(realSourcePath)).isFile()) {
+    throw new Error(`Registry path is not a file: ${path}.`);
+  }
+
+  return realSourcePath;
+}
 
 export async function readRegistry(root = repositoryRoot) {
   const registryPath = resolve(root, "registry.json");
@@ -61,7 +95,6 @@ export async function validateRegistry(root = repositoryRoot) {
     }
 
     let hasComponent = false;
-    let hasStyle = false;
     const destinations = new Set();
 
     for (const file of item.files) {
@@ -70,39 +103,25 @@ export async function validateRegistry(root = repositoryRoot) {
         continue;
       }
 
-      if (file.path.includes("\\")) errors.push(`${item.name} source paths must use forward slashes.`);
-      const sourcePath = resolve(root, file.path);
-      const fromRoot = relative(root, sourcePath);
-      if (isAbsolute(file.path) || fromRoot === ".." || fromRoot.startsWith(`..${sep}`)) {
-        errors.push(`${item.name} has a source path outside the repository: ${file.path}.`);
-        continue;
-      }
-
+      let sourcePath;
       try {
-        await access(sourcePath);
-      } catch {
-        errors.push(`${item.name} references a missing source file: ${file.path}.`);
+        sourcePath = await resolveRegistryFile(root, file.path);
+      } catch (error) {
+        errors.push(`${item.name} has an invalid source file ${file.path}: ${error.message}`);
       }
+      if (!sourcePath) continue;
 
       const destination = file.target ?? file.path.split("/").at(-1);
-      if (typeof destination !== "string" || destination.includes("\\") || isAbsolute(destination)) {
+      if (!isSafeRelativePath(destination)) {
         errors.push(`${item.name} has an invalid installation target.`);
-        continue;
-      }
-      const stagedPath = resolve(root, destination);
-      const fromRootTarget = relative(root, stagedPath);
-      if (fromRootTarget === ".." || fromRootTarget.startsWith(`..${sep}`)) {
-        errors.push(`${item.name} has an installation target outside its destination: ${destination}.`);
         continue;
       }
       if (destinations.has(destination)) errors.push(`${item.name} repeats installation target ${destination}.`);
       destinations.add(destination);
-      if (!["registry:component", "registry:style", "registry:lib", "registry:hook"].includes(file.type)) {
+      if (!["registry:component", "registry:style", "registry:lib", "registry:hook", "registry:file"].includes(file.type)) {
         errors.push(`${item.name} uses an unsupported install file type: ${file.type}.`);
       }
       hasComponent ||= file.type === "registry:component";
-      hasStyle ||= file.type === "registry:style";
-
       if (file.type === "registry:component" && file.path.endsWith(".tsx")) {
         try {
           const source = await readFile(sourcePath, "utf8");
@@ -124,7 +143,6 @@ export async function validateRegistry(root = repositoryRoot) {
     }
 
     if (!hasComponent) errors.push(`${item.name} must include a registry:component file.`);
-    if (!hasStyle) errors.push(`${item.name} must include a registry:style file.`);
     if (!item.meta || typeof item.meta !== "object") {
       errors.push(`${item.name} must include component metadata.`);
     } else {
@@ -135,6 +153,20 @@ export async function validateRegistry(root = repositoryRoot) {
         errors.push(`${item.name} metadata must include framework compatibility.`);
       }
       if (!Array.isArray(item.meta.assets)) errors.push(`${item.name} metadata must declare required assets.`);
+      else {
+        for (const asset of item.meta.assets) {
+          try {
+            await resolveRegistryFile(root, asset);
+            const assetTarget = `assets/${asset.split("/").at(-1)}`;
+            if (destinations.has(assetTarget)) {
+              errors.push(`${item.name} asset target conflicts with an install file: ${assetTarget}.`);
+            }
+            destinations.add(assetTarget);
+          } catch (error) {
+            errors.push(`${item.name} has an invalid asset ${asset}: ${error.message}`);
+          }
+        }
+      }
       if (!item.meta.installation) errors.push(`${item.name} metadata must include installation instructions.`);
       if (!item.meta.reducedMotion) errors.push(`${item.name} metadata must describe reduced-motion support.`);
       if (!item.meta.license) errors.push(`${item.name} metadata must include license information.`);

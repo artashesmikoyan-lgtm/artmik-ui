@@ -2,7 +2,12 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import registry from "../registry.json";
 import { EditorialCard } from "../registry/sections/editorial-card/component";
-import { validateRegistry } from "../packages/registry-tools/registry.mjs";
+import {
+  isSafeRelativePath,
+  repositoryRoot,
+  resolveRegistryFile,
+  validateRegistry,
+} from "../packages/registry-tools/registry.mjs";
 
 describe("registry EditorialCard", () => {
   it("renders as a labelled article with configurable content and attributes", () => {
@@ -37,5 +42,13 @@ describe("registry EditorialCard", () => {
 
   it("passes registry metadata and source-file validation", async () => {
     await expect(validateRegistry()).resolves.toEqual([]);
+  });
+
+  it("rejects unsafe registry paths before resolving files", async () => {
+    expect(isSafeRelativePath("registry/sections/editorial-card/component.tsx")).toBe(true);
+    expect(isSafeRelativePath("../README.md")).toBe(false);
+    expect(isSafeRelativePath("C:/Windows/win.ini")).toBe(false);
+    expect(isSafeRelativePath("registry\\component.tsx")).toBe(false);
+    await expect(resolveRegistryFile(repositoryRoot, "../README.md")).rejects.toThrow("Unsafe registry path");
   });
 });

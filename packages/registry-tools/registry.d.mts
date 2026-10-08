@@ -33,5 +33,7 @@ export interface Registry {
 }
 
 export const repositoryRoot: string;
+export function isSafeRelativePath(path: unknown): path is string;
+export function resolveRegistryFile(root: string, path: string): Promise<string>;
 export function readRegistry(root?: string): Promise<{ registry: Registry; registryPath: string }>;
 export function validateRegistry(root?: string): Promise<string[]>;
