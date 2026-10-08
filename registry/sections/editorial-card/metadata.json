@@ -1,0 +1,15 @@
+{
+  "id": "editorial-card",
+  "title": "Editorial Card",
+  "description": "A semantic, minimal article surface with optional index, eyebrow, heading, and content.",
+  "category": "sections",
+  "tags": ["editorial", "card", "content", "semantic"],
+  "frameworks": ["react"],
+  "dependencies": ["react"],
+  "files": ["component.tsx", "styles.css"],
+  "assets": [],
+  "installation": "Copy editorial-card.tsx into your component directory, import editorial-card.css once, and ensure React 18 or 19 is installed.",
+  "reducedMotion": "No animation is used; the component remains static for all motion preferences.",
+  "license": "MIT",
+  "provenance": "ORIGINAL"
+}

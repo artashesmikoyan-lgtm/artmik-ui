@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "artmik-ui",
+  "homepage": "https://github.com/artashesmikoyan-lgtm/artmik-ui",
+  "items": [
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "editorial-card",
+      "type": "registry:ui",
+      "title": "Editorial Card",
+      "description": "A semantic, minimal article surface with optional index, eyebrow, heading, and content.",
+      "dependencies": ["react"],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/sections/editorial-card/component.tsx",
+          "type": "registry:component",
+          "target": "editorial-card.tsx"
+        },
+        {
+          "path": "registry/sections/editorial-card/styles.css",
+          "type": "registry:style",
+          "target": "editorial-card.css"
+        }
+      ],
+      "meta": {
+        "id": "editorial-card",
+        "category": "sections",
+        "tags": ["editorial", "card", "content", "semantic"],
+        "frameworks": ["react"],
+        "assets": [],
+        "installation": "Copy editorial-card.tsx into your component directory, import editorial-card.css once, and ensure React 18 or 19 is installed.",
+        "reducedMotion": "No animation is used; the component remains static for all motion preferences.",
+        "license": "MIT",
+        "provenance": "ORIGINAL"
+      }
+    }
+  ]
+}

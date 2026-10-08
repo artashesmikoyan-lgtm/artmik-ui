@@ -40,7 +40,8 @@ IntersectionObserver, matchMedia, CSS, and React handle motion and interaction.
 
 ## Installation and local development
 
-Requirements: Node.js 20.19+ or 22.12+ and npm.
+Requirements: Node.js 20.19+ or 22.12+. npm remains supported for library
+consumers and local development; pnpm is used for workspace validation.
 
 Clone the tagged release, install dependencies, and build the library:
 
@@ -57,8 +58,8 @@ Start the demo during local development:
 npm run dev
 ```
 
-The dev server opens the placeholder demo. The library and demo can be built
-independently:
+The demo shows the interactive character hero and library components. The
+library and demo can be built independently:
 
 ```sh
 npm run lint
@@ -66,11 +67,41 @@ npm run typecheck
 npm test
 npm run build
 npm run build:demo
+npm run validate:registry
+npm run test:registry-install
+npm run test:package-consumer
 ```
 
 `npm run build` creates ESM and CommonJS bundles, CSS, and TypeScript declarations
 in `dist/`. React and React DOM are peer dependencies and are not bundled. The
 test suite uses Vitest, React Testing Library, user-event, and jsdom.
+
+The repository is also a pnpm workspace. The root remains the published
+`artmik-ui` package so existing root-level installs, package exports, and npm
+packing continue to work:
+
+```sh
+corepack pnpm install
+corepack pnpm lint
+corepack pnpm typecheck
+corepack pnpm test
+corepack pnpm build
+```
+
+## Source registry
+
+`registry.json` is a shadcn-compatible registry index. The initial
+`editorial-card` item is in
+[`registry/sections/editorial-card`](./registry/sections/editorial-card); it
+contains installable component source and its standalone stylesheet, plus a
+demo and metadata. It depends only on React and uses no gallery-private
+imports or external assets. Registry entries include category, tags, framework,
+dependency, installation, reduced-motion, and license metadata.
+
+Run `npm run validate:registry` to check catalog entries and required files, and
+`npm run test:registry-install` to stage and verify the files an installer
+would receive. Registry files are currently consumed from the local checkout;
+a hosted registry endpoint is intentionally outside this phase.
 
 ## Usage
 

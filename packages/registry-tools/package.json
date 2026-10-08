@@ -1,0 +1,10 @@
+{
+  "name": "@artmik-ui/registry-tools",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "validate": "node ./validate-registry.mjs",
+    "test:install": "node ./install-smoke.mjs"
+  }
+}

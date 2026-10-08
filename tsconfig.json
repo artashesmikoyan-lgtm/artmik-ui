@@ -17,5 +17,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "demo", "tests"]
+  "include": ["src", "demo", "registry", "tests"]
 }
